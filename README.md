@@ -5,7 +5,7 @@ Large Json Datasets tend to have a lot of repetition in the documents. Especiall
 For example. locations, org Names, person names, enumerations, database foreign-keys etc.
 
 A (Very bad, but tiny) Example.
-
+```
 data = [
 {
     Project: "Tim's bakery",
@@ -30,6 +30,7 @@ data = [
 },
 .........THOUSANDS of similar records.
 ]
+```
 
 Assume, now:
 1. There are 10 Staff Members.
@@ -39,7 +40,7 @@ Assume, now:
 But each item in the list, will need to "spell out" the above EVERY TIME.
 
 Instead, Let's compress it, intelligently.
-
+```
 packed_data = 
 {
    // Let's compress the attribute names, while we're at it. JSONC style baby!
@@ -65,14 +66,14 @@ packed_data =
      ..... 1000s of tiny strings like above.
    ]
 }
-
+```
 So, with an overhead of SCHEMA_MAP and ENUMS, 
 which obviously WILL MAKE NO SENSE FOR SMALL DATA SETS!! (Please just don't),
 potential for compression is HUGE.
 
 We're talking:
 ----------------------
-
+```
 {
     Project: "Tim's bakery",
     Assigned to: "Mark Robinson",
@@ -94,15 +95,15 @@ We're talking:
     Category: "Enterprise",
     CategoryId: 55
 }
-
+```
 (AROUND 449 BYTES)
 
 -------TO ==> 
-
+```
 {p:"Tim's Bakery",at:0,ss:2,ct:0,cti:0},
 {p: "Jons's Saloon",at:0,ss:2,ct:0,ci:0},
 {p: "Starbucks LA",at:1,ss:4,ct:1,ci:1},
-
+```
 (AROUND 123 BYTES)
 
 A COMPRESSION RATIO OF : 75%. (Discounting the overhead, of course)
